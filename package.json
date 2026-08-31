@@ -1,0 +1,10 @@
+{
+  "name": "dear-black-boy-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dear Black Boy — static marketing site (plain HTML/CSS/JS, no dependencies)",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/build.mjs && echo \"Static site — serve the dist/ folder\""
+  }
+}
