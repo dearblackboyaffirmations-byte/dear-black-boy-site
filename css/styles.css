@@ -276,11 +276,10 @@ section[id] { scroll-margin-top: 90px; }
 /* --- Gallery ----------------------------------------------------------- */
 
 .gallery {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  grid-auto-rows: 200px; gap: 16px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: 240px; gap: 16px; max-width: 1000px;
 }
 .gallery img { width: 100%; height: 100%; object-fit: cover; }
-.gallery img.is-tall { grid-row: span 2; }
 .gallery img.is-lower { object-position: center 30%; }
 
 /* --- Scholar notes (loose-leaf) ---------------------------------------- */
@@ -368,7 +367,8 @@ section[id] { scroll-margin-top: 90px; }
 /* --- Founder ----------------------------------------------------------- */
 
 .founder__inner { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(36px, 5vw, 60px); }
-.founder__portrait { width: 100%; max-width: 420px; display: block; aspect-ratio: 3 / 4; object-fit: cover; }
+.founder__photos { display: flex; flex-direction: column; gap: 16px; max-width: 520px; }
+.founder__photos img { width: 100%; display: block; aspect-ratio: 3 / 2; object-fit: cover; }
 .founder__title { font-size: clamp(32px, 4vw, 52px); color: var(--cream); margin: 14px 0 24px; }
 .founder__body { font-size: 17px; line-height: 1.68; color: var(--cream-75); max-width: 58ch; margin-bottom: 16px; }
 .founder__pull {
@@ -473,6 +473,34 @@ section[id] { scroll-margin-top: 90px; }
 }
 .icon-link:hover { border-color: var(--gold); color: var(--gold); }
 .site-footer__copy { font-size: 13px; color: var(--cream-40); }
+
+
+/* --- Lightbox ----------------------------------------------------------- */
+
+.gallery img, .founder__photos img, .feature__img, .hero__figure img, .book-cover, .program img {
+  cursor: zoom-in;
+}
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(12, 11, 9, 0.94);
+  display: none; align-items: center; justify-content: center;
+  padding: 40px 24px; cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+  /* Every photo expands into the same frame, whatever its aspect ratio. */
+  width: min(1040px, 92vw); height: min(720px, 80vh);
+  object-fit: contain;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+}
+.lightbox__close {
+  position: absolute; top: 22px; right: 26px;
+  width: 44px; height: 44px; cursor: pointer;
+  background: none; border: 1px solid rgba(245, 241, 232, 0.35);
+  color: var(--cream); font-family: var(--display); font-size: 22px; line-height: 1;
+  transition: border-color .15s ease, color .15s ease;
+}
+.lightbox__close:hover { border-color: var(--gold); color: var(--gold); }
 
 /* --- Motion preference -------------------------------------------------- */
 

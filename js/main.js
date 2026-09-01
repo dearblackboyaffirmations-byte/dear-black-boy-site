@@ -95,6 +95,33 @@
     }
   }
 
+
+  /* --- Photo lightbox ----------------------------------------------------- */
+  var lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    var lightboxImg = lightbox.querySelector('img');
+    var zoomable = 'main .gallery img, main .founder__photos img, main .feature__img, main .hero__figure img, main .book-cover, main .program img';
+
+    document.addEventListener('click', function (e) {
+      var img = e.target.closest(zoomable);
+      if (!img) return;
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+      lightboxImg.removeAttribute('src');
+    }
+    lightbox.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
   /* --- Inquiry form ------------------------------------------------------
      Replace this handler with your host's form action (GoDaddy form block,
      Formspree, etc.). Until then it confirms in place without navigating.  */
