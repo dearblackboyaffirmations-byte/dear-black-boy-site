@@ -122,6 +122,41 @@
     });
   }
 
+
+  /* --- Impact counters ---------------------------------------------------- */
+  var impact = document.getElementById('impact');
+  if (impact && typeof IntersectionObserver !== 'undefined') {
+    var cells = Array.prototype.slice.call(impact.querySelectorAll('[data-count]'));
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (cells.length && !reduced) {
+      cells.forEach(function (el) { el.textContent = '0'; });
+
+      var runCount = function (el, delay) {
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        var duration = 1600;
+        var start = null;
+        var step = function (now) {
+          if (start === null) start = now;
+          var t = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased).toLocaleString('en-US');
+          if (t < 1) requestAnimationFrame(step);
+        };
+        setTimeout(function () { requestAnimationFrame(step); }, delay);
+      };
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          io.disconnect();
+          cells.forEach(function (el, i) { runCount(el, i * 140); });
+        });
+      }, { threshold: 0.35 });
+      io.observe(impact);
+    }
+  }
+
   /* --- Inquiry form ------------------------------------------------------
      Replace this handler with your host's form action (GoDaddy form block,
      Formspree, etc.). Until then it confirms in place without navigating.  */
